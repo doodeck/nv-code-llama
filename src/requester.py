@@ -21,10 +21,14 @@ payload = {
 
 class Requester:
     @classmethod
-    def session_endpoint(cls) -> None:
+    def get_api_key_authorization(cls) -> dict:
         API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC = os.getenv("NV_API_KEY")
+        return { "Authorization": f"Bearer {API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC}" }
+
+    @classmethod
+    def session_endpoint(cls) -> None:
         headers = {
-            "Authorization": f"Bearer {API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC}",
+            **cls.get_api_key_authorization(),
             "Accept": "application/json",
         }
         payload["stream"] = False
@@ -44,9 +48,8 @@ class Requester:
         print(response_body)
     
     def stream_endpoint(cls) -> None:
-        API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC = os.getenv("NV_API_KEY")
         headers = {
-            "Authorization": f"Bearer {API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC}",
+            **cls.get_api_key_authorization(),
             "Accept": "text/event-stream",
             "Content-Type": "application/json",
         }
