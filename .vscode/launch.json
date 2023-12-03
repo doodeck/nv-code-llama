@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["--session"],
+            "args": ["--session", "--query", "Test"],
             "purpose": ["debug-in-terminal"]
         }
     ]

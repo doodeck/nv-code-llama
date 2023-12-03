@@ -14,11 +14,15 @@ def main() -> None:
     parser.add_argument('-s', '--session', dest='endpoint', action='store_const',
                         const=Requester.session_endpoint, default=Requester.stream_endpoint,
                         help='GET using session (default: stream)')
+    parser.add_argument('-q', '--query', type=str,
+                        default=None,
+                        help='query to the model (default: fibonacci)')
+
     args = parser.parse_args()
 
     load_dotenv()  # take environment variables from .env.
     #  Requester.stream_endpoint()
-    args.endpoint()
+    args.endpoint(args.query)
 
 
 if __name__ == "__main__":
